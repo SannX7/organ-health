@@ -1,0 +1,1322 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OrganKu — Edukasi Kesehatan Organ</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0e1a;
+    --bg2: #0f1525;
+    --bg3: #151d35;
+    --surface: #1a2340;
+    --surface2: #1f2a4a;
+    --border: rgba(100,140,255,0.12);
+    --border2: rgba(100,140,255,0.22);
+    --text: #e8edf8;
+    --muted: #7a8ab0;
+    --accent: #4f7fff;
+    --accent2: #7b5ea7;
+    --glow: rgba(79,127,255,0.15);
+    --red: #ff4f6a;
+    --green: #3dd68c;
+    --amber: #f5a623;
+    --teal: #2dd4bf;
+    --pink: #e879f9;
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* SCROLLBAR */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 10px; }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(10,14,26,0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 60px;
+  }
+  .nav-logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.3rem;
+    background: linear-gradient(135deg, #4f7fff, #7b5ea7);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: -0.02em;
+  }
+  .nav-links { display: flex; gap: 0.25rem; }
+  .nav-links a {
+    color: var(--muted); text-decoration: none; font-size: 0.82rem;
+    padding: 0.4rem 0.75rem; border-radius: 6px;
+    transition: all 0.2s; font-weight: 400;
+  }
+  .nav-links a:hover { color: var(--text); background: var(--surface); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center;
+    padding: 80px 2rem 4rem;
+    position: relative; overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 70% 50% at 50% 40%, rgba(79,127,255,0.1) 0%, transparent 70%),
+                radial-gradient(ellipse 40% 40% at 20% 80%, rgba(123,94,167,0.08) 0%, transparent 60%),
+                radial-gradient(ellipse 30% 30% at 80% 20%, rgba(45,212,191,0.06) 0%, transparent 60%);
+  }
+  .hero-grid {
+    position: absolute; inset: 0;
+    background-image: linear-gradient(var(--border) 1px, transparent 1px),
+                      linear-gradient(90deg, var(--border) 1px, transparent 1px);
+    background-size: 50px 50px;
+    mask-image: radial-gradient(ellipse 80% 60% at 50% 50%, black 30%, transparent 80%);
+  }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(79,127,255,0.1); border: 1px solid rgba(79,127,255,0.25);
+    border-radius: 999px; padding: 0.3rem 1rem;
+    font-size: 0.75rem; color: #7aaeff; letter-spacing: 0.08em;
+    margin-bottom: 1.5rem; position: relative;
+  }
+  .badge-dot { width: 6px; height: 6px; border-radius: 50%; background: #4f7fff; animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:0.3; } }
+  .hero h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(2.8rem, 7vw, 5.5rem);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -0.04em;
+    position: relative;
+    margin-bottom: 1.25rem;
+  }
+  .hero h1 span { background: linear-gradient(135deg, #4f7fff 0%, #a78bfa 50%, #2dd4bf 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  .hero p {
+    font-size: 1.1rem; color: var(--muted); max-width: 560px;
+    line-height: 1.7; position: relative; margin-bottom: 2.5rem;
+    font-weight: 300;
+  }
+  .hero-cta { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; position: relative; }
+  .btn-primary {
+    background: linear-gradient(135deg, #4f7fff, #7b5ea7);
+    color: white; border: none; padding: 0.75rem 2rem;
+    border-radius: 10px; font-size: 0.9rem; font-weight: 500;
+    cursor: pointer; transition: all 0.25s; font-family: inherit;
+    box-shadow: 0 0 30px rgba(79,127,255,0.3);
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 40px rgba(79,127,255,0.4); }
+  .btn-outline {
+    background: transparent; color: var(--text);
+    border: 1px solid var(--border2); padding: 0.75rem 2rem;
+    border-radius: 10px; font-size: 0.9rem; font-weight: 400;
+    cursor: pointer; transition: all 0.25s; font-family: inherit;
+  }
+  .btn-outline:hover { background: var(--surface); border-color: rgba(100,140,255,0.4); }
+
+  /* STATS ROW */
+  .stats-row {
+    display: flex; gap: 0; border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    background: var(--bg2);
+  }
+  .stat-item {
+    flex: 1; padding: 1.5rem 2rem; text-align: center;
+    border-right: 1px solid var(--border);
+  }
+  .stat-item:last-child { border-right: none; }
+  .stat-num {
+    font-family: 'Syne', sans-serif; font-size: 1.8rem; font-weight: 700;
+    color: var(--accent);
+  }
+  .stat-label { font-size: 0.78rem; color: var(--muted); margin-top: 2px; }
+
+  /* ORGAN SELECTOR */
+  .section { padding: 5rem 2rem; max-width: 1200px; margin: 0 auto; }
+  .section-label {
+    font-size: 0.72rem; letter-spacing: 0.12em; color: var(--accent);
+    text-transform: uppercase; margin-bottom: 0.5rem; font-weight: 500;
+  }
+  .section-title {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    font-weight: 700; letter-spacing: -0.03em;
+    margin-bottom: 0.5rem;
+  }
+  .section-sub { color: var(--muted); font-size: 1rem; line-height: 1.6; max-width: 520px; font-weight: 300; }
+
+  .organ-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 1rem; margin-top: 2.5rem;
+  }
+  .organ-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 1.25rem 1rem;
+    cursor: pointer;
+    transition: all 0.25s;
+    text-align: center;
+    position: relative; overflow: hidden;
+  }
+  .organ-card::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: var(--card-glow, transparent);
+    opacity: 0; transition: opacity 0.3s;
+    border-radius: 14px;
+  }
+  .organ-card:hover::before { opacity: 1; }
+  .organ-card:hover {
+    border-color: var(--card-border, var(--border2));
+    transform: translateY(-3px);
+  }
+  .organ-card.active {
+    border-color: var(--card-border, var(--border2));
+    background: var(--surface2);
+  }
+  .organ-icon { font-size: 2.2rem; margin-bottom: 0.6rem; display: block; }
+  .organ-name { font-size: 0.88rem; font-weight: 500; color: var(--text); }
+  .organ-status {
+    display: inline-block; margin-top: 0.4rem;
+    font-size: 0.68rem; padding: 2px 8px; border-radius: 999px;
+    font-weight: 500;
+  }
+  .status-vital { background: rgba(255,79,106,0.15); color: var(--red); }
+  .status-key { background: rgba(79,127,255,0.15); color: #7aaeff; }
+  .status-support { background: rgba(61,214,140,0.15); color: var(--green); }
+
+  /* DETAIL PANEL */
+  .detail-panel {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    overflow: hidden;
+    margin-top: 2rem;
+    display: none;
+    animation: slideUp 0.35s ease;
+  }
+  .detail-panel.visible { display: block; }
+  @keyframes slideUp { from { opacity:0; transform: translateY(20px); } to { opacity:1; transform:translateY(0); } }
+
+  .detail-header {
+    padding: 2rem 2.5rem;
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; gap: 1.5rem;
+    background: linear-gradient(135deg, var(--surface) 0%, var(--bg2) 100%);
+  }
+  .detail-icon-wrap {
+    width: 80px; height: 80px; border-radius: 20px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 2.5rem; flex-shrink: 0;
+    border: 1px solid var(--border2);
+  }
+  .detail-header-text h2 {
+    font-family: 'Syne', sans-serif; font-size: 1.8rem; font-weight: 700;
+    letter-spacing: -0.03em; margin-bottom: 0.25rem;
+  }
+  .detail-header-text p { color: var(--muted); font-size: 0.9rem; line-height: 1.5; }
+
+  .detail-tabs {
+    display: flex; border-bottom: 1px solid var(--border);
+    padding: 0 2rem; gap: 0;
+    background: var(--bg2);
+    overflow-x: auto;
+  }
+  .tab-btn {
+    padding: 1rem 1.5rem; font-size: 0.85rem; font-weight: 500;
+    color: var(--muted); background: transparent; border: none;
+    border-bottom: 2px solid transparent; cursor: pointer;
+    transition: all 0.2s; font-family: inherit; white-space: nowrap;
+  }
+  .tab-btn:hover { color: var(--text); }
+  .tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+  .tab-content { display: none; padding: 2.5rem; }
+  .tab-content.active { display: block; animation: fadeIn 0.25s ease; }
+  @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+
+  .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.25rem; }
+  .info-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px; padding: 1.25rem;
+  }
+  .info-card-header {
+    display: flex; align-items: center; gap: 0.6rem;
+    margin-bottom: 1rem;
+  }
+  .info-card-icon {
+    width: 32px; height: 32px; border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1rem; flex-shrink: 0;
+  }
+  .info-card-title { font-weight: 500; font-size: 0.9rem; }
+  .info-list { list-style: none; }
+  .info-list li {
+    font-size: 0.85rem; color: var(--muted); padding: 0.45rem 0;
+    border-bottom: 1px solid rgba(100,140,255,0.06);
+    display: flex; gap: 0.5rem; line-height: 1.5;
+  }
+  .info-list li:last-child { border-bottom: none; }
+  .info-list li::before { content: '▸'; color: var(--accent); font-size: 0.7rem; margin-top: 2px; flex-shrink: 0; }
+
+  .risk-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; margin-bottom: 1.5rem; }
+  .risk-card {
+    background: var(--surface); border-radius: 12px; padding: 1.25rem;
+    border-left: 3px solid;
+  }
+  .risk-card.high { border-color: var(--red); }
+  .risk-card.medium { border-color: var(--amber); }
+  .risk-card.low { border-color: var(--green); }
+  .risk-level {
+    font-size: 0.7rem; font-weight: 600; letter-spacing: 0.08em;
+    text-transform: uppercase; margin-bottom: 0.5rem;
+  }
+  .risk-card.high .risk-level { color: var(--red); }
+  .risk-card.medium .risk-level { color: var(--amber); }
+  .risk-card.low .risk-level { color: var(--green); }
+  .risk-title { font-size: 0.9rem; font-weight: 500; margin-bottom: 0.5rem; }
+  .risk-desc { font-size: 0.82rem; color: var(--muted); line-height: 1.55; }
+
+  .symptoms-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 0.75rem; }
+  .symptom-tag {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 10px; padding: 0.75rem 1rem;
+    font-size: 0.83rem; color: var(--muted);
+    display: flex; align-items: center; gap: 0.5rem;
+  }
+  .symptom-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .dot-red { background: var(--red); }
+  .dot-amber { background: var(--amber); }
+  .dot-blue { background: var(--accent); }
+
+  .care-timeline { position: relative; padding-left: 1.5rem; }
+  .care-timeline::before {
+    content: ''; position: absolute; left: 0; top: 0; bottom: 0;
+    width: 1px; background: var(--border2);
+  }
+  .timeline-item {
+    position: relative; margin-bottom: 1.5rem;
+    padding-left: 1.5rem;
+  }
+  .timeline-dot {
+    position: absolute; left: -1.5rem; top: 4px;
+    width: 10px; height: 10px; border-radius: 50%;
+    border: 2px solid var(--bg2); margin-left: -4px;
+  }
+  .timeline-freq {
+    font-size: 0.7rem; color: var(--accent); font-weight: 500;
+    text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.25rem;
+  }
+  .timeline-title { font-size: 0.9rem; font-weight: 500; margin-bottom: 0.25rem; }
+  .timeline-desc { font-size: 0.82rem; color: var(--muted); line-height: 1.55; }
+
+  .fact-box {
+    background: rgba(79,127,255,0.06); border: 1px solid rgba(79,127,255,0.15);
+    border-radius: 12px; padding: 1.25rem 1.5rem; margin-bottom: 1rem;
+  }
+  .fact-box .fact-label {
+    font-size: 0.7rem; color: var(--accent); font-weight: 600;
+    letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.5rem;
+  }
+  .fact-box p { font-size: 0.87rem; color: var(--text); line-height: 1.65; }
+
+  /* SCREENING SECTION */
+  .screening-section { padding: 5rem 2rem; background: var(--bg2); }
+  .screening-inner { max-width: 1200px; margin: 0 auto; }
+  .screening-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.25rem; margin-top: 2.5rem; }
+  .screening-card {
+    background: var(--bg3); border: 1px solid var(--border);
+    border-radius: 16px; padding: 1.5rem; transition: all 0.25s;
+  }
+  .screening-card:hover { border-color: var(--border2); transform: translateY(-2px); }
+  .screening-age {
+    font-size: 0.72rem; font-weight: 600; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--accent); margin-bottom: 0.75rem;
+  }
+  .screening-title { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 600; margin-bottom: 0.75rem; }
+  .screening-items { list-style: none; }
+  .screening-items li {
+    font-size: 0.83rem; color: var(--muted); padding: 0.4rem 0;
+    border-bottom: 1px solid var(--border); display: flex; gap: 0.5rem;
+  }
+  .screening-items li:last-child { border-bottom: none; }
+  .screening-items li::before { content: '→'; color: var(--teal); }
+
+  /* EMERGENCY */
+  .emergency-section { padding: 5rem 2rem; max-width: 1200px; margin: 0 auto; }
+  .emergency-banner {
+    background: rgba(255,79,106,0.07); border: 1px solid rgba(255,79,106,0.2);
+    border-radius: 16px; padding: 2rem 2.5rem; margin-bottom: 2rem;
+    display: flex; align-items: center; gap: 1.5rem;
+  }
+  .emergency-icon { font-size: 2.5rem; flex-shrink: 0; }
+  .emergency-title { font-family: 'Syne', sans-serif; font-size: 1.2rem; font-weight: 700; color: var(--red); margin-bottom: 0.5rem; }
+  .emergency-desc { font-size: 0.88rem; color: var(--muted); line-height: 1.6; }
+  .emergency-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem; }
+  .emergency-card {
+    background: var(--surface); border: 1px solid rgba(255,79,106,0.15);
+    border-radius: 12px; padding: 1.25rem;
+  }
+  .emergency-organ { font-size: 0.72rem; color: var(--red); font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 0.5rem; }
+  .emergency-signs { list-style: none; }
+  .emergency-signs li { font-size: 0.83rem; color: var(--muted); padding: 0.35rem 0; display: flex; gap: 0.5rem; }
+  .emergency-signs li::before { content: '⚠'; font-size: 0.75rem; color: var(--red); }
+
+  /* FOOTER */
+  footer {
+    background: var(--bg2); border-top: 1px solid var(--border);
+    padding: 3rem 2rem; text-align: center;
+  }
+  .footer-logo { font-family: 'Syne', sans-serif; font-size: 1.5rem; font-weight: 800; margin-bottom: 1rem; background: linear-gradient(135deg, #4f7fff, #7b5ea7); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  .footer-text { font-size: 0.82rem; color: var(--muted); line-height: 1.6; max-width: 500px; margin: 0 auto; }
+  .footer-disclaimer {
+    margin-top: 1.5rem; padding: 1rem 1.5rem;
+    background: rgba(245,166,35,0.08); border: 1px solid rgba(245,166,35,0.2);
+    border-radius: 10px; font-size: 0.78rem; color: var(--amber); max-width: 600px; margin: 1.5rem auto 0;
+  }
+
+  /* PROGRESS BAR HEALTH */
+  .health-meter { margin-top: 1rem; }
+  .meter-label { display: flex; justify-content: space-between; font-size: 0.78rem; color: var(--muted); margin-bottom: 0.4rem; }
+  .meter-bar { height: 6px; background: var(--surface2); border-radius: 999px; overflow: hidden; }
+  .meter-fill { height: 100%; border-radius: 999px; transition: width 1s ease; }
+  .fill-red { background: linear-gradient(90deg, #ff4f6a, #ff6b7d); }
+  .fill-amber { background: linear-gradient(90deg, #f5a623, #fbbf24); }
+  .fill-green { background: linear-gradient(90deg, #3dd68c, #10b981); }
+  .fill-blue { background: linear-gradient(90deg, #4f7fff, #60a5fa); }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    nav { padding: 0 1rem; }
+    .nav-links { display: none; }
+    .stats-row { flex-wrap: wrap; }
+    .stat-item { flex: 1 0 50%; border-right: none; border-bottom: 1px solid var(--border); }
+    .section { padding: 3rem 1rem; }
+    .detail-header { flex-direction: column; text-align: center; }
+    .tab-btn { padding: 0.75rem 1rem; font-size: 0.8rem; }
+    .tab-content { padding: 1.5rem 1rem; }
+    .emergency-banner { flex-direction: column; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">OrganKu</div>
+  <div class="nav-links">
+    <a href="#organs">Organ</a>
+    <a href="#screening">Pemeriksaan</a>
+    <a href="#darurat">Darurat</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-badge">
+    <span class="badge-dot"></span>
+    EDUKASI KESEHATAN TERPADU
+  </div>
+  <h1>Kenali<br><span>Tubuhmu</span><br>Lebih Dalam</h1>
+  <p>Panduan lengkap merawat, menjaga, dan memahami setiap organ vital dalam tubuh — dari cara kerja hingga tanda bahaya.</p>
+  <div class="hero-cta">
+    <button class="btn-primary" onclick="document.getElementById('organs').scrollIntoView({behavior:'smooth'})">Jelajahi Organ →</button>
+    <button class="btn-outline" onclick="document.getElementById('screening').scrollIntoView({behavior:'smooth'})">Jadwal Pemeriksaan</button>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-row">
+  <div class="stat-item">
+    <div class="stat-num">12</div>
+    <div class="stat-label">Organ Vital Tercakup</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">80+</div>
+    <div class="stat-label">Tips Kesehatan</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">50+</div>
+    <div class="stat-label">Penyakit Dibahas</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">24/7</div>
+    <div class="stat-label">Akses Edukasi</div>
+  </div>
+</div>
+
+<!-- ORGAN SECTION -->
+<div class="section" id="organs">
+  <div class="section-label">SISTEM TUBUH</div>
+  <h2 class="section-title">Pilih Organ yang Ingin Kamu Pelajari</h2>
+  <p class="section-sub">Klik organ untuk melihat detail lengkap: fungsi, cara merawat, penyebab kerusakan, dan gejala yang perlu diwaspadai.</p>
+
+  <div class="organ-grid" id="organGrid"></div>
+  <div class="detail-panel" id="detailPanel"></div>
+</div>
+
+<!-- SCREENING -->
+<div class="screening-section" id="screening">
+  <div class="screening-inner">
+    <div class="section-label">PEMERIKSAAN RUTIN</div>
+    <h2 class="section-title">Jadwal Skrining Berdasarkan Usia</h2>
+    <p class="section-sub">Pemeriksaan preventif yang tepat waktu dapat mendeteksi masalah lebih awal dan menyelamatkan nyawa.</p>
+
+    <div class="screening-grid">
+      <div class="screening-card">
+        <div class="screening-age">USIA 20–30 TAHUN</div>
+        <div class="screening-title">Fondasi Kesehatan</div>
+        <ul class="screening-items">
+          <li>Tekanan darah — setiap 2 tahun</li>
+          <li>Kadar kolesterol — setiap 5 tahun</li>
+          <li>Gula darah puasa — setiap 3 tahun</li>
+          <li>Tes HIV, Hepatitis B & C</li>
+          <li>Pap smear (wanita) — 3 tahun sekali</li>
+          <li>Dental check-up — 6 bulan sekali</li>
+          <li>Pemeriksaan mata — 2 tahun sekali</li>
+        </ul>
+      </div>
+      <div class="screening-card">
+        <div class="screening-age">USIA 30–40 TAHUN</div>
+        <div class="screening-title">Deteksi Dini Aktif</div>
+        <ul class="screening-items">
+          <li>Profil lipid lengkap — tahunan</li>
+          <li>HbA1c (diabetes) — tahunan</li>
+          <li>Fungsi tiroid (TSH) — 5 tahun sekali</li>
+          <li>EKG dasar — sekali</li>
+          <li>Mamografi (wanita) — 1–2 tahun sekali</li>
+          <li>Kepadatan tulang (wanita berisiko)</li>
+          <li>USG abdomen jika ada riwayat</li>
+        </ul>
+      </div>
+      <div class="screening-card">
+        <div class="screening-age">USIA 40–50 TAHUN</div>
+        <div class="screening-title">Pemantauan Intensif</div>
+        <ul class="screening-items">
+          <li>Kolonoskopi — 10 tahun sekali</li>
+          <li>PSA (pria) — tahunan</li>
+          <li>Ekokardiografi jika berisiko</li>
+          <li>Rontgen paru (perokok)</li>
+          <li>Tes fungsi ginjal (ureum, kreatinin)</li>
+          <li>DEXA scan kepadatan tulang</li>
+          <li>Pemeriksaan fundus mata</li>
+        </ul>
+      </div>
+      <div class="screening-card">
+        <div class="screening-age">USIA 50+ TAHUN</div>
+        <div class="screening-title">Perlindungan Menyeluruh</div>
+        <ul class="screening-items">
+          <li>Tes fungsi hati (SGOT, SGPT) — tahunan</li>
+          <li>CT scan thorax low-dose (perokok)</li>
+          <li>Pemeriksaan saraf perifer</li>
+          <li>Audiometri (pendengaran)</li>
+          <li>Skrining depresi & kognitif</li>
+          <li>EKG Holter jika ada keluhan</li>
+          <li>Pemeriksaan kulit menyeluruh</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- EMERGENCY -->
+<div class="emergency-section" id="darurat">
+  <div class="section-label">TANDA BAHAYA</div>
+  <h2 class="section-title">Gejala yang Butuh Penanganan Segera</h2>
+
+  <div class="emergency-banner">
+    <div class="emergency-icon">🚨</div>
+    <div>
+      <div class="emergency-title">HUBUNGI 119 / IGD TERDEKAT JIKA MENGALAMI GEJALA BERIKUT</div>
+      <div class="emergency-desc">Gejala-gejala ini bisa menandakan kondisi darurat medis yang mengancam jiwa. Jangan tunda penanganan — setiap menit sangat berarti.</div>
+    </div>
+  </div>
+
+  <div class="emergency-grid">
+    <div class="emergency-card">
+      <div class="emergency-organ">JANTUNG</div>
+      <ul class="emergency-signs">
+        <li>Nyeri dada seperti ditindih benda berat</li>
+        <li>Sesak napas tiba-tiba tanpa sebab</li>
+        <li>Nyeri menjalar ke lengan kiri atau rahang</li>
+        <li>Berkeringat dingin disertai mual</li>
+        <li>Jantung berdebar tidak teratur</li>
+      </ul>
+    </div>
+    <div class="emergency-card">
+      <div class="emergency-organ">OTAK / STROKE</div>
+      <ul class="emergency-signs">
+        <li>Wajah tidak simetris (mulut mencong)</li>
+        <li>Lengan melemah tiba-tiba (satu sisi)</li>
+        <li>Bicara cadel atau tidak dapat bicara</li>
+        <li>Penglihatan mendadak kabur/ganda</li>
+        <li>Sakit kepala hebat seperti dipukul</li>
+      </ul>
+    </div>
+    <div class="emergency-card">
+      <div class="emergency-organ">GINJAL</div>
+      <ul class="emergency-signs">
+        <li>Tidak buang air kecil >12 jam</li>
+        <li>Urine berwarna merah gelap atau hitam</li>
+        <li>Bengkak tiba-tiba di seluruh tubuh</li>
+        <li>Nyeri pinggang hebat seperti ditusuk</li>
+        <li>Kebingungan disertai sesak napas</li>
+      </ul>
+    </div>
+    <div class="emergency-card">
+      <div class="emergency-organ">PARU-PARU</div>
+      <ul class="emergency-signs">
+        <li>Sesak napas parah, tidak bisa berbicara</li>
+        <li>Batuk darah dalam jumlah banyak</li>
+        <li>Bibir atau kuku membiru (sianosis)</li>
+        <li>Nyeri dada tajam saat bernapas</li>
+        <li>Napas cepat >30x/menit</li>
+      </ul>
+    </div>
+    <div class="emergency-card">
+      <div class="emergency-organ">HATI / LIVER</div>
+      <ul class="emergency-signs">
+        <li>Mata dan kulit menguning tiba-tiba</li>
+        <li>Perut membesar dengan cepat</li>
+        <li>Muntah darah atau BAB hitam</li>
+        <li>Kebingungan hebat / tidak sadar</li>
+        <li>Demam tinggi dengan penyakit kuning</li>
+      </ul>
+    </div>
+    <div class="emergency-card">
+      <div class="emergency-organ">USUS / LAMBUNG</div>
+      <ul class="emergency-signs">
+        <li>Nyeri perut sangat hebat tiba-tiba</li>
+        <li>Perut keras dan kembung parah</li>
+        <li>Muntah darah (hematemesis)</li>
+        <li>Tidak bisa buang angin >24 jam</li>
+        <li>Tanda-tanda syok (pucat, dingin)</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">OrganKu</div>
+  <p class="footer-text">Platform edukasi kesehatan organ untuk meningkatkan kesadaran masyarakat Indonesia tentang pentingnya menjaga kesehatan dari dalam.</p>
+  <div class="footer-disclaimer">
+    ⚠️ Disclaimer: Konten ini hanya untuk tujuan edukasi. Selalu konsultasikan kondisi kesehatanmu dengan dokter atau tenaga medis profesional.
+  </div>
+</footer>
+
+<script>
+const organs = [
+  {
+    id: 'jantung', name: 'Jantung', icon: '❤️', color: '#ff4f6a',
+    glow: 'rgba(255,79,106,0.08)', borderColor: 'rgba(255,79,106,0.4)',
+    status: 'vital', statusText: 'Vital Utama',
+    desc: 'Pompa kehidupan yang berdetak rata-rata 100.000 kali per hari, memompa sekitar 5 liter darah per menit ke seluruh tubuh.',
+    fungsi: [
+      'Memompa darah beroksigen ke seluruh tubuh melalui arteri',
+      'Mengalirkan darah miskin oksigen ke paru-paru untuk diperbarui',
+      'Menjaga tekanan darah dan sirkulasi yang stabil',
+      'Mendistribusikan nutrisi, hormon, dan sel imun ke jaringan',
+      'Membuang produk sisa metabolisme melalui sirkulasi'
+    ],
+    perawatan: [
+      { freq: 'Setiap Hari', title: 'Olahraga Aerobik 30 Menit', desc: 'Jalan cepat, bersepeda, atau berenang melatih otot jantung dan menurunkan tekanan darah.', color: '#4f7fff' },
+      { freq: 'Setiap Hari', title: 'Kelola Stres', desc: 'Stres kronis meningkatkan kortisol yang merusak dinding arteri. Meditasi 10 menit terbukti efektif.', color: '#7b5ea7' },
+      { freq: 'Diet Rutin', title: 'Diet DASH & Mediterania', desc: 'Perbanyak sayur, buah, ikan, kacang-kacangan. Kurangi garam (<5g/hari) dan lemak jenuh.', color: '#3dd68c' },
+      { freq: 'Hindari', title: 'Stop Merokok & Alkohol', desc: 'Rokok meningkatkan risiko penyakit jantung koroner hingga 4x lipat. Alkohol berlebihan melemahkan otot jantung.', color: '#ff4f6a' },
+      { freq: 'Tidur', title: 'Tidur Cukup 7–9 Jam', desc: 'Kurang tidur meningkatkan tekanan darah, peradangan, dan risiko serangan jantung.', color: '#2dd4bf' }
+    ],
+    risiko: [
+      { level: 'high', title: 'Merokok', desc: 'Nikotin menyempitkan pembuluh darah, meningkatkan tekanan darah, dan mempercepat penumpukan plak di arteri.' },
+      { level: 'high', title: 'Hipertensi Tak Terkontrol', desc: 'Tekanan darah tinggi memaksa jantung bekerja lebih keras, memperbesar dan melemahkan otot jantung.' },
+      { level: 'high', title: 'Kolesterol LDL Tinggi', desc: 'Plak kolesterol menyumbat arteri koroner, memotong suplai darah ke otot jantung (infark miokard).' },
+      { level: 'medium', title: 'Diabetes & Obesitas', desc: 'Gula darah tinggi merusak dinding pembuluh darah. BMI >30 meningkatkan beban kerja jantung secara signifikan.' },
+      { level: 'medium', title: 'Stres Kronis', desc: 'Pelepasan adrenalin terus-menerus mempercepat denyut jantung dan meningkatkan pembekuan darah.' },
+      { level: 'low', title: 'Kurang Aktivitas Fisik', desc: 'Gaya hidup sedentari melemahkan otot jantung dan menurunkan efisiensi kardiovaskular.' }
+    ],
+    gejala: [
+      { text: 'Nyeri atau tekanan di dada', type: 'red' },
+      { text: 'Sesak napas saat aktivitas ringan', type: 'red' },
+      { text: 'Jantung berdebar tidak teratur', type: 'red' },
+      { text: 'Pembengkakan kaki dan pergelangan', type: 'amber' },
+      { text: 'Kelelahan ekstrem tanpa sebab', type: 'amber' },
+      { text: 'Pusing atau hampir pingsan', type: 'amber' },
+      { text: 'Mual dan keringat dingin', type: 'red' },
+      { text: 'Nyeri menjalar ke lengan/rahang', type: 'red' },
+      { text: 'Batuk malam yang persisten', type: 'blue' },
+      { text: 'Detak jantung cepat saat istirahat', type: 'blue' }
+    ],
+    fakta: [
+      { label: 'FAKTA MENARIK', text: 'Jantung manusia berdetak sekitar 35 juta kali per tahun dan memompa cukup darah untuk mengisi 1,5 juta barel selama seumur hidup rata-rata.' },
+      { label: 'TAHUKAH KAMU', text: 'Olahraga aerobik secara rutin dapat memperbesar ukuran bilik kiri jantung, membuat setiap detak lebih efisien — inilah yang disebut "jantung atlet".' }
+    ],
+    meters: [
+      { label: 'Sensitivitas terhadap rokok', value: 95, type: 'red' },
+      { label: 'Manfaat olahraga rutin', value: 90, type: 'green' },
+      { label: 'Dampak diet terhadap kesehatan', value: 80, type: 'blue' }
+    ]
+  },
+  {
+    id: 'paru', name: 'Paru-Paru', icon: '🫁', color: '#4f7fff',
+    glow: 'rgba(79,127,255,0.08)', borderColor: 'rgba(79,127,255,0.4)',
+    status: 'vital', statusText: 'Vital Utama',
+    desc: 'Sepasang organ pernapasan yang memproses sekitar 11.000 liter udara per hari, menukar karbon dioksida dengan oksigen segar.',
+    fungsi: [
+      'Pertukaran gas: menyerap oksigen dari udara dan melepas CO₂',
+      'Memfilter partikel udara melalui silia dan lendir bronkus',
+      'Mengatur keseimbangan pH darah melalui kadar CO₂',
+      'Vokalisasi — paru memberi tekanan udara untuk berbicara',
+      'Pertahanan imun terhadap patogen yang terhirup'
+    ],
+    perawatan: [
+      { freq: 'Prioritas #1', title: 'Jangan Pernah Merokok', desc: 'Setiap rokok mengandung 7.000+ zat kimia berbahaya. Hentikan merokok dalam 20 menit sudah mulai memberikan manfaat.', color: '#ff4f6a' },
+      { freq: 'Harian', title: 'Latihan Napas Dalam', desc: 'Teknik pernapasan diafragma melatih kapasitas paru dan meningkatkan efisiensi pertukaran gas hingga 30%.', color: '#4f7fff' },
+      { freq: 'Lingkungan', title: 'Hindari Polutan Indoor', desc: 'Gunakan exhaust fan, hindari pembakaran dalam ruangan, pakai masker saat kualitas udara buruk (AQI >100).', color: '#3dd68c' },
+      { freq: 'Vaksinasi', title: 'Vaksin Influenza & Pneumonia', desc: 'Vaksin tahunan melindungi dari infeksi yang bisa memperburuk fungsi paru secara permanen.', color: '#7b5ea7' },
+      { freq: 'Olahraga', title: 'Kardio di Udara Segar', desc: 'Jogging pagi di taman meningkatkan kapasitas vital paru. Target VO2 max meningkat dengan latihan rutin.', color: '#2dd4bf' }
+    ],
+    risiko: [
+      { level: 'high', title: 'Rokok & Vape', desc: 'Menyebabkan PPOK (Penyakit Paru Obstruktif Kronik), kanker paru, emfisema, dan bronkitis kronis.' },
+      { level: 'high', title: 'Polusi Udara PM2.5', desc: 'Partikel ultrafine menembus alvéoli, memicu peradangan kronis dan menurunkan fungsi paru permanen.' },
+      { level: 'high', title: 'Paparan Asbes & Silika', desc: 'Penyebab utama mesotelioma dan silikosis — penyakit paru okupasional yang fatal.' },
+      { level: 'medium', title: 'Infeksi Berulang', desc: 'Pneumonia, TBC, atau bronkitis yang tidak ditangani tuntas meninggalkan jaringan parut di paru.' },
+      { level: 'medium', title: 'Alergi & Asma Tidak Terkontrol', desc: 'Inflamasi saluran napas kronis menyempitkan bronkus dan menurunkan kapasitas fungsi paru.' },
+      { level: 'low', title: 'Kelembaban Ekstrem', desc: 'Lingkungan terlalu lembab memicu pertumbuhan jamur dan spora yang menginfeksi paru.' }
+    ],
+    gejala: [
+      { text: 'Sesak napas saat aktivitas normal', type: 'red' },
+      { text: 'Batuk kronis >3 minggu', type: 'amber' },
+      { text: 'Batuk berdarah', type: 'red' },
+      { text: 'Mengi (wheezing) saat bernapas', type: 'amber' },
+      { text: 'Nyeri dada saat bernapas dalam', type: 'red' },
+      { text: 'Produksi dahak berlebihan', type: 'amber' },
+      { text: 'Kelelahan ekstrem', type: 'blue' },
+      { text: 'Bibir atau jari membiru', type: 'red' }
+    ],
+    fakta: [
+      { label: 'FAKTA PARU', text: 'Paru-paru kanan memiliki 3 lobus sementara yang kiri hanya 2 — karena jantung mengambil sebagian ruang di sisi kiri.' },
+      { label: 'KAPASITAS', text: 'Total kapasitas paru orang dewasa sekitar 6 liter, namun saat bernapas normal kita hanya menggunakan 0.5 liter (tidal volume).' }
+    ],
+    meters: [
+      { label: 'Dampak rokok terhadap paru', value: 98, type: 'red' },
+      { label: 'Kemampuan regenerasi paru', value: 45, type: 'amber' },
+      { label: 'Manfaat berhenti merokok', value: 85, type: 'green' }
+    ]
+  },
+  {
+    id: 'ginjal', name: 'Ginjal', icon: '🫘', color: '#2dd4bf',
+    glow: 'rgba(45,212,191,0.08)', borderColor: 'rgba(45,212,191,0.4)',
+    status: 'key', statusText: 'Organ Kunci',
+    desc: 'Dua organ berbentuk kacang yang menyaring 180 liter darah per hari, menghasilkan 1-2 liter urine, dan mengatur keseimbangan elektrolit.',
+    fungsi: [
+      'Menyaring 200 liter darah setiap 24 jam melalui nefron',
+      'Mengatur keseimbangan cairan, sodium, kalium, dan pH darah',
+      'Memproduksi hormon eritropoietin untuk pembentukan sel darah merah',
+      'Mengaktifkan vitamin D untuk kesehatan tulang',
+      'Mengatur tekanan darah melalui sistem renin-angiotensin'
+    ],
+    perawatan: [
+      { freq: 'Harian', title: 'Minum Air 8–10 Gelas', desc: 'Hidrasi cukup mengencerkan zat sisa dan mencegah batu ginjal. Urine berwarna kuning muda = tanda terhidrasi baik.', color: '#2dd4bf' },
+      { freq: 'Diet', title: 'Batasi Garam & Protein Berlebih', desc: 'Konsumsi protein >1.6g/kgBB membebani ginjal. Kurangi makanan tinggi oksalat untuk cegah batu ginjal.', color: '#4f7fff' },
+      { freq: 'Obat-obatan', title: 'Hati-hati NSAID & Obat Bebas', desc: 'Ibuprofen dan diklofenak jika dikonsumsi rutin merusak nefron ginjal secara permanen. Gunakan sesuai dosis.', color: '#ff4f6a' },
+      { freq: 'Kontrol', title: 'Kendalikan Diabetes & Hipertensi', desc: 'Keduanya adalah penyebab utama gagal ginjal kronis. Target HbA1c <7% dan tekanan darah <130/80 mmHg.', color: '#f5a623' },
+      { freq: 'Hindari', title: 'Jauhi Suplemen Tidak Terverifikasi', desc: 'Suplemen herbal tidak terdaftar, obat diet ilegal, dan kontras radiologi berulang bisa merusak ginjal.', color: '#7b5ea7' }
+    ],
+    risiko: [
+      { level: 'high', title: 'Diabetes Mellitus', desc: 'Nefropati diabetik adalah komplikasi paling umum — gula darah tinggi merusak kapiler glomerulus ginjal.' },
+      { level: 'high', title: 'Hipertensi Kronis', desc: 'Tekanan tinggi merusak pembuluh darah halus di ginjal, mengurangi GFR (laju filtrasi glomerulus) secara bertahap.' },
+      { level: 'high', title: 'Dehidrasi Berulang', desc: 'Sering kekurangan cairan membentuk kristal dan batu ginjal, serta meningkatkan risiko infeksi saluran kemih naik.' },
+      { level: 'medium', title: 'Penggunaan Obat Nefrotoksik', desc: 'NSAID, antibiotik aminoglikosida, dan agen kontras IV bisa menyebabkan kerusakan ginjal akut.' },
+      { level: 'medium', title: 'Obesitas', desc: 'Lemak visceral memicu peradangan sistemik dan meningkatkan tekanan intraglomerular.' },
+      { level: 'low', title: 'Riwayat Keluarga', desc: 'Penyakit ginjal polikistik adalah kelainan genetik yang menyebabkan kista berkembang merusak jaringan ginjal.' }
+    ],
+    gejala: [
+      { text: 'Urine berbusa atau berdarah', type: 'red' },
+      { text: 'Pembengkakan kaki dan wajah', type: 'amber' },
+      { text: 'Buang air kecil lebih sedikit dari biasa', type: 'red' },
+      { text: 'Kelelahan dan lemah tanpa sebab', type: 'blue' },
+      { text: 'Nyeri punggung bawah atau pinggang', type: 'amber' },
+      { text: 'Gatal-gatal di seluruh kulit', type: 'blue' },
+      { text: 'Mual dan kehilangan nafsu makan', type: 'blue' },
+      { text: 'Napas berbau amonia (uremia)', type: 'red' }
+    ],
+    fakta: [
+      { label: 'TAHUKAH KAMU', text: 'Manusia bisa hidup normal dengan hanya satu ginjal. Donor ginjal yang sehat dapat menjalani kehidupan normal tanpa gangguan berarti.' },
+      { label: 'KEMAMPUAN ADAPTASI', text: 'Ginjal yang tersisa setelah donasi akan membesar dan meningkatkan kapasitasnya hingga 70% dari fungsi total dua ginjal.' }
+    ],
+    meters: [
+      { label: 'Dampak diabetes terhadap ginjal', value: 92, type: 'red' },
+      { label: 'Manfaat hidrasi cukup', value: 88, type: 'green' },
+      { label: 'Kemampuan regenerasi ginjal', value: 30, type: 'amber' }
+    ]
+  },
+  {
+    id: 'hati', name: 'Hati (Liver)', icon: '🫀', color: '#f5a623',
+    glow: 'rgba(245,166,35,0.08)', borderColor: 'rgba(245,166,35,0.4)',
+    status: 'vital', statusText: 'Vital Utama',
+    desc: 'Organ terbesar (1.5kg) dengan 500+ fungsi metabolik: detoksifikasi, produksi protein, pengaturan gula darah, dan metabolisme lemak.',
+    fungsi: [
+      'Detoksifikasi: menetralisir alkohol, obat-obatan, dan racun',
+      'Produksi empedu untuk pencernaan dan penyerapan lemak',
+      'Sintesis protein darah: albumin, fibrinogen, faktor pembekuan',
+      'Regulasi glukosa darah dan penyimpanan glikogen',
+      'Metabolisme lemak, kolesterol, dan vitamin larut lemak (A,D,E,K)'
+    ],
+    perawatan: [
+      { freq: 'Prioritas', title: 'Nol Alkohol atau Minimalkan', desc: 'Alkohol adalah hepatotoksin langsung. Konsumsi >14 unit/minggu menyebabkan perlemakan hati → sirosis → kanker.', color: '#ff4f6a' },
+      { freq: 'Diet', title: 'Diet Anti-Inflamasi', desc: 'Kurangi gula fruktosa (minuman manis), lemak trans, dan makanan ultra-proses. Konsumsi kopi hitam 2 cangkir/hari terbukti protektif.', color: '#f5a623' },
+      { freq: 'Vaksinasi', title: 'Vaksin Hepatitis A & B', desc: 'Hepatitis B adalah penyebab utama karsinoma hepatoseluler di Asia. Vaksinasi memberikan perlindungan >95%.', color: '#3dd68c' },
+      { freq: 'Berat Badan', title: 'Jaga BMI Normal (18.5–24.9)', desc: 'Lemak yang menumpuk di hati (NAFLD/NASH) bisa berkembang jadi sirosis meski tanpa konsumsi alkohol.', color: '#4f7fff' },
+      { freq: 'Hati-hati', title: 'Bijak Gunakan Paracetamol', desc: 'Overdosis paracetamol (>4g/hari dewasa) adalah penyebab gagal hati akut terbanyak di negara maju.', color: '#7b5ea7' }
+    ],
+    risiko: [
+      { level: 'high', title: 'Hepatitis B & C Kronis', desc: 'Infeksi virus kronis menyebabkan sirosis dan meningkatkan risiko kanker hati hingga 100 kali lipat.' },
+      { level: 'high', title: 'Konsumsi Alkohol Berlebih', desc: 'Alkohol memicu perlemakan hati, hepatitis alkoholik, dan sirosis yang tidak dapat dipulihkan.' },
+      { level: 'high', title: 'NAFLD / Perlemakan Hati Non-Alkohol', desc: 'Kondisi terkait obesitas dan sindrom metabolik yang kini menjadi penyebab sirosis terbanyak kedua.' },
+      { level: 'medium', title: 'Obat & Suplemen Hepatotoksik', desc: 'Paracetamol berlebih, obat TBC (isoniazid), dan berbagai herbal tradisional bisa merusak sel hati.' },
+      { level: 'medium', title: 'Hemokromatosis', desc: 'Kelebihan zat besi genetik yang menumpuk di hati dan menyebabkan sirosis progresif.' },
+      { level: 'low', title: 'Paparan Aflatoksin', desc: 'Jamur pada kacang tanah atau jagung yang disimpan lembab menghasilkan karsinogen hati yang kuat.' }
+    ],
+    gejala: [
+      { text: 'Kulit dan mata menguning (jaundice)', type: 'red' },
+      { text: 'Perut membesar (asites)', type: 'red' },
+      { text: 'Urine berwarna gelap seperti teh', type: 'amber' },
+      { text: 'Feses berwarna pucat atau putih', type: 'amber' },
+      { text: 'Nyeri atau rasa berat di kanan atas perut', type: 'amber' },
+      { text: 'Kelelahan ekstrem dan lemah', type: 'blue' },
+      { text: 'Mual dan hilang nafsu makan', type: 'blue' },
+      { text: 'Gatal-gatal di seluruh kulit', type: 'blue' }
+    ],
+    fakta: [
+      { label: 'KEKUATAN REGENERASI', text: 'Hati adalah satu-satunya organ internal yang bisa beregenerasi penuh. Bahkan jika 75% hati diangkat, ia bisa tumbuh kembali ke ukuran normalnya dalam beberapa minggu.' },
+      { label: 'FAKTA METABOLIK', text: 'Hati menghasilkan sekitar 800–1000ml empedu per hari dan memproses hampir semua yang kamu makan — menjadikannya "pabrik kimia" tubuh yang paling kompleks.' }
+    ],
+    meters: [
+      { label: 'Dampak alkohol terhadap hati', value: 96, type: 'red' },
+      { label: 'Kemampuan regenerasi hati', value: 80, type: 'green' },
+      { label: 'Risiko hepatitis B tanpa vaksin', value: 70, type: 'amber' }
+    ]
+  },
+  {
+    id: 'otak', name: 'Otak', icon: '🧠', color: '#a78bfa',
+    glow: 'rgba(167,139,250,0.08)', borderColor: 'rgba(167,139,250,0.4)',
+    status: 'vital', statusText: 'Vital Utama',
+    desc: 'Pusat komando 86 miliar neuron yang mengendalikan seluruh fungsi tubuh, kognisi, emosi, dan kesadaran dengan konsumsi energi 20% dari total.',
+    fungsi: [
+      'Memproses informasi sensorik dari seluruh tubuh secara simultan',
+      'Mengendalikan gerakan volunter dan refleks involunter',
+      'Mengatur fungsi vital: pernapasan, detak jantung, suhu tubuh',
+      'Pusat memori, pembelajaran, bahasa, dan kreativitas',
+      'Produksi neurotransmitter: dopamin, serotonin, GABA, noradrenalin'
+    ],
+    perawatan: [
+      { freq: 'Tidur', title: 'Tidur Berkualitas 7–9 Jam', desc: 'Sistem glimfatik membersihkan protein tau dan beta-amiloid (penyebab Alzheimer) hanya saat tidur dalam. Deep sleep adalah "car wash" otak.', color: '#a78bfa' },
+      { freq: 'Mental', title: 'Stimulasi Kognitif Rutin', desc: 'Belajar bahasa baru, memainkan alat musik, atau puzzle meningkatkan plastisitas otak dan cadangan kognitif terhadap demensia.', color: '#4f7fff' },
+      { freq: 'Fisik', title: 'Olahraga untuk Neurogenesis', desc: 'Aerobik merangsang BDNF (Brain-Derived Neurotrophic Factor) — protein yang mendorong pertumbuhan neuron baru di hipokampus.', color: '#3dd68c' },
+      { freq: 'Gizi', title: 'Omega-3, Antioksidan & Vitamin B', desc: 'Ikan berlemak (DHA/EPA), blueberry, kunyit, dan sayuran hijau gelap melindungi mielin dan mengurangi neuroinflammation.', color: '#f5a623' },
+      { freq: 'Sosial', title: 'Koneksi Sosial yang Bermakna', desc: 'Isolasi sosial meningkatkan risiko demensia hingga 60%. Interaksi sosial aktif merangsang banyak area otak sekaligus.', color: '#2dd4bf' }
+    ],
+    risiko: [
+      { level: 'high', title: 'Stroke & Hipertensi', desc: 'Stroke iskemik memotong aliran darah — setiap menit 2 juta neuron mati. Hipertensi adalah faktor risiko stroke #1.' },
+      { level: 'high', title: 'Trauma Kepala Berulang', desc: 'CTE (Chronic Traumatic Encephalopathy) akibat benturan kepala berulang menyebabkan demensia progresif.' },
+      { level: 'high', title: 'Kurang Tidur Kronis', desc: 'Tidur <6 jam per malam meningkatkan akumulasi plak amiloid, biomarker utama Alzheimer.' },
+      { level: 'medium', title: 'Depresi & Stres Kronis', desc: 'Kortisol tinggi berkepanjangan mengecilkan hipokampus — pusat memori dan navigasi spasial.' },
+      { level: 'medium', title: 'Diabetes & Sindrom Metabolik', desc: 'Resistensi insulin di otak dikaitkan dengan "diabetes tipe 3" — nama informal untuk Alzheimer.' },
+      { level: 'low', title: 'Polusi Udara PM2.5', desc: 'Partikel ultrafine melewati sawar darah-otak, memicu neuroinflammation dan mempercepat penurunan kognitif.' }
+    ],
+    gejala: [
+      { text: 'Sakit kepala mendadak sangat hebat', type: 'red' },
+      { text: 'Kelemahan atau kebas satu sisi tubuh', type: 'red' },
+      { text: 'Gangguan bicara tiba-tiba', type: 'red' },
+      { text: 'Kehilangan memori jangka pendek', type: 'amber' },
+      { text: 'Perubahan kepribadian atau mood', type: 'amber' },
+      { text: 'Kejang tanpa riwayat epilepsi', type: 'red' },
+      { text: 'Penglihatan ganda atau buram', type: 'amber' },
+      { text: 'Kesulitan berjalan atau koordinasi', type: 'amber' }
+    ],
+    fakta: [
+      { label: 'KECEPATAN OTAK', text: 'Otak manusia bisa memproses informasi setara dengan 1 exaFLOP (10^18 operasi per detik) — jauh melampaui superkomputer manapun saat ini.' },
+      { label: 'NEUROPLASTISITAS', text: 'Otak bisa membentuk koneksi sinaptik baru sepanjang hidup. Belajar keterampilan baru secara harfiah mengubah struktur fisik otak kamu.' }
+    ],
+    meters: [
+      { label: 'Pentingnya kualitas tidur', value: 95, type: 'blue' },
+      { label: 'Dampak olahraga terhadap otak', value: 85, type: 'green' },
+      { label: 'Risiko stroke tanpa kontrol hipertensi', value: 88, type: 'red' }
+    ]
+  },
+  {
+    id: 'lambung', name: 'Lambung', icon: '🫃', color: '#e879f9',
+    glow: 'rgba(232,121,249,0.08)', borderColor: 'rgba(232,121,249,0.4)',
+    status: 'key', statusText: 'Organ Kunci',
+    desc: 'Kantung muscular yang mencerna makanan dengan asam lambung (pH 1.5–3.5) dan enzim pepsin, mampu menampung 1–2 liter.',
+    fungsi: [
+      'Menyimpan dan mencerna makanan secara mekanik dan kimiawi',
+      'Memproduksi asam klorida (HCl) untuk membunuh patogen',
+      'Mensekresi pepsinogen yang diaktifkan menjadi pepsin untuk cerna protein',
+      'Memproduksi faktor intrinsik untuk penyerapan vitamin B12',
+      'Mengatur pengosongan makanan ke duodenum secara bertahap'
+    ],
+    perawatan: [
+      { freq: 'Kebiasaan Makan', title: 'Makan Teratur & Tidak Terburu-buru', desc: 'Makan 3x sehari pada jam tetap mencegah asam lambung berlebih saat perut kosong. Kunyah 20–30x per suapan.', color: '#e879f9' },
+      { freq: 'Hindari', title: 'Batasi OAINS dan Aspirin', desc: 'NSAID merusak lapisan mukosa lambung langsung. Jika harus minum, selalu bersama makanan dan tambahkan PPI.', color: '#ff4f6a' },
+      { freq: 'Posisi', title: 'Jangan Langsung Tiduran', desc: 'Tunggu minimal 2–3 jam setelah makan sebelum berbaring untuk mencegah GERD (naiknya asam lambung).', color: '#4f7fff' },
+      { freq: 'Stres', title: 'Kelola Stres dengan Baik', desc: 'Stres mengaktifkan saraf vagus yang meningkatkan produksi asam dan memperlambat motilitas lambung.', color: '#f5a623' },
+      { freq: 'Diet', title: 'Hindari Makanan Pemicu GERD', desc: 'Kopi, alkohol, cokelat, makanan pedas/berlemak, dan mint melemahkan sfingter esofagus bawah.', color: '#3dd68c' }
+    ],
+    risiko: [
+      { level: 'high', title: 'Infeksi H. pylori', desc: 'Bakteri Helicobacter pylori menginfeksi 50% populasi global dan menyebabkan tukak lambung serta meningkatkan risiko kanker lambung.' },
+      { level: 'high', title: 'Penggunaan NSAID Jangka Panjang', desc: 'Menghambat prostaglandin yang melindungi mukosa, menyebabkan erosi dan ulkus peptikum.' },
+      { level: 'medium', title: 'Stres Psikologis Kronis', desc: 'Meningkatkan sekresi asam dan mengurangi aliran darah mukosa lambung.' },
+      { level: 'medium', title: 'Merokok & Alkohol', desc: 'Memperburuk GERD, mengganggu penyembuhan ulkus, dan meningkatkan risiko kanker lambung.' },
+      { level: 'low', title: 'Pola Makan Tidak Teratur', desc: 'Perut kosong terlalu lama membuat asam lambung mengiritasi dinding lambung tanpa adanya makanan sebagai buffer.' }
+    ],
+    gejala: [
+      { text: 'Nyeri atau rasa terbakar di ulu hati', type: 'amber' },
+      { text: 'Asam naik ke tenggorokan (heartburn)', type: 'amber' },
+      { text: 'Mual dan muntah berulang', type: 'amber' },
+      { text: 'Kembung dan rasa penuh setelah makan sedikit', type: 'blue' },
+      { text: 'Muntah darah atau bercak hitam', type: 'red' },
+      { text: 'Feses berwarna hitam (melena)', type: 'red' },
+      { text: 'Penurunan berat badan tanpa sebab', type: 'red' },
+      { text: 'Sulit menelan (disfagia)', type: 'amber' }
+    ],
+    fakta: [
+      { label: 'PERTAHANAN LUAR BIASA', text: 'Lapisan mukus lambung diganti sepenuhnya setiap 3 hari untuk mencegah asam lambung mencerna dirinya sendiri.' },
+      { label: 'ASAM YANG KUAT', text: 'Asam lambung (pH 1.5) cukup kuat untuk melarutkan logam seng. Lapisan mukus adalah pertahanan utama yang mencegah self-digestion.' }
+    ],
+    meters: [
+      { label: 'Risiko H. pylori di populasi', value: 50, type: 'amber' },
+      { label: 'Dampak stres pada lambung', value: 75, type: 'amber' },
+      { label: 'Perbaikan dengan pola makan baik', value: 80, type: 'green' }
+    ]
+  },
+  {
+    id: 'usus', name: 'Usus', icon: '🫙', color: '#3dd68c',
+    glow: 'rgba(61,214,140,0.08)', borderColor: 'rgba(61,214,140,0.4)',
+    status: 'key', statusText: 'Organ Kunci',
+    desc: 'Sistem saluran cerna total 7-8 meter yang menyerap nutrisi, menampung 100 triliun bakteri, dan menghasilkan 95% serotonin tubuh.',
+    fungsi: [
+      'Usus halus: penyerapan nutrisi (karbohidrat, protein, lemak, vitamin)',
+      'Usus besar: penyerapan air dan elektrolit, pembentukan feses',
+      'Inang mikrobioma: 38 triliun bakteri baik yang mendukung imunitas',
+      'Produksi 95% serotonin tubuh — "otak kedua" melalui sumbu usus-otak',
+      'Sistem imun enterik: 70% sel imun tubuh berada di usus'
+    ],
+    perawatan: [
+      { freq: 'Harian', title: 'Konsumsi Serat 25–38g per Hari', desc: 'Serat larut (oat, apel, kacang) memberi makan bakteri baik. Serat tidak larut (sayuran, gandum) memperlancar transit usus.', color: '#3dd68c' },
+      { freq: 'Probiotik', title: 'Makanan Fermentasi Setiap Hari', desc: 'Yogurt, kimchi, tempeh, kefir, dan kombucha mengandung probiotik yang mendiversifikasi mikrobioma usus.', color: '#2dd4bf' },
+      { freq: 'Hidrasi', title: 'Minum Air Sebelum Makan', desc: 'Air membantu pergerakan usus dan mencegah konstipasi. Kurang cairan adalah penyebab utama sembelit.', color: '#4f7fff' },
+      { freq: 'Hindari', title: 'Kurangi Antibiotik Tidak Perlu', desc: 'Antibiotik membunuh bakteri baik sekaligus. Selalu lengkapi dengan probiotik 2 jam setelah antibiotik.', color: '#ff4f6a' },
+      { freq: 'Gaya Hidup', title: 'Gerak Aktif dan Kurangi Duduk', desc: 'Aktivitas fisik meningkatkan motilitas usus. Sedentari adalah penyebab konstipasi dan gas berlebih.', color: '#f5a623' }
+    ],
+    risiko: [
+      { level: 'high', title: 'Diet Rendah Serat & Tinggi Proses', desc: 'Merusak keragaman mikrobioma usus, meningkatkan risiko kanker kolorektal dan penyakit inflamasi usus.' },
+      { level: 'high', title: 'Kanker Kolorektal', desc: 'Penyebab kematian kanker nomor 2 di dunia. Polip bisa berkembang 10–15 tahun sebelum menjadi kanker.' },
+      { level: 'medium', title: 'IBD (Crohn & Kolitis Ulseratif)', desc: 'Penyakit autoimun yang menyebabkan peradangan kronis pada lapisan usus.' },
+      { level: 'medium', title: 'Sindrom Usus Bocor (Leaky Gut)', desc: 'Peningkatan permeabilitas usus memungkinkan toksin masuk darah, memicu peradangan sistemik dan autoimunitas.' },
+      { level: 'low', title: 'Stres Psikologis', desc: 'Sumbu otak-usus (gut-brain axis) berarti stres langsung memengaruhi motilitas dan sensitivitas usus.' }
+    ],
+    gejala: [
+      { text: 'Perubahan kebiasaan BAB tiba-tiba', type: 'red' },
+      { text: 'Darah pada feses (merah segar/hitam)', type: 'red' },
+      { text: 'Kembung kronis dan gas berlebih', type: 'blue' },
+      { text: 'Nyeri perut berulang tanpa sebab jelas', type: 'amber' },
+      { text: 'Diare atau sembelit bergantian', type: 'amber' },
+      { text: 'Penurunan berat badan tidak disengaja', type: 'red' },
+      { text: 'Kelelahan ekstrem (anemia dari usus)', type: 'blue' },
+      { text: 'Mucus dalam feses', type: 'amber' }
+    ],
+    fakta: [
+      { label: 'OTAK KEDUA', text: 'Usus memiliki 500 juta neuron — lebih banyak dari seluruh sumsum tulang belakang — dan berkomunikasi langsung dengan otak melalui saraf vagus.' },
+      { label: 'EKOSISTEM DALAM TUBUH', text: 'Mikrobioma usus kamu mengandung lebih banyak DNA unik daripada seluruh DNA manusia kamu sendiri, dengan lebih dari 1000 spesies bakteri berbeda.' }
+    ],
+    meters: [
+      { label: 'Peran serat dalam kesehatan usus', value: 92, type: 'green' },
+      { label: 'Dampak antibiotik berlebih', value: 78, type: 'amber' },
+      { label: 'Risiko kanker kolorektal tanpa skrining', value: 65, type: 'red' }
+    ]
+  },
+  {
+    id: 'pankreas', name: 'Pankreas', icon: '🧫', color: '#f5a623',
+    glow: 'rgba(245,166,35,0.08)', borderColor: 'rgba(245,166,35,0.4)',
+    status: 'support', statusText: 'Organ Pendukung',
+    desc: 'Kelenjar ganda (eksokrin + endokrin) yang menghasilkan insulin, glukagon, dan enzim pencernaan kuat untuk memecah semua makronutrien.',
+    fungsi: [
+      'Fungsi endokrin: produksi insulin dan glukagon untuk regulasi gula darah',
+      'Fungsi eksokrin: sekresi 1.5L enzim pencernaan per hari ke duodenum',
+      'Netralisasi asam lambung melalui sekresi bikarbonat',
+      'Produksi somatostatin untuk mengatur hormon saluran cerna',
+      'Memecah protein (tripsin, kimotripsin), lemak (lipase), dan pati (amilase)'
+    ],
+    perawatan: [
+      { freq: 'Diet', title: 'Batasi Gula dan Karbohidrat Refined', desc: 'Lonjakan gula darah berulang merangsang pankreas berlebih, menyebabkan kelelahan sel beta dan diabetes tipe 2.', color: '#f5a623' },
+      { freq: 'Nol Alkohol', title: 'Alkohol = Musuh Pankreas', desc: 'Alkohol memicu pankreatitis akut yang mematikan dan pankreatitis kronis yang menghancurkan fungsi pankreas.', color: '#ff4f6a' },
+      { freq: 'Berat Badan', title: 'Jaga IMT Ideal', desc: 'Lemak visceral memicu peradangan pankreas dan resistensi insulin. Turunkan berat badan bertahap jika overweight.', color: '#3dd68c' },
+      { freq: 'Hati-hati', title: 'Hati-hati Obat Tertentu', desc: 'Beberapa diuretik, kortikosteroid, dan obat AIDs bisa memicu pankreatitis sebagai efek samping.', color: '#7b5ea7' },
+      { freq: 'Periodik', title: 'Periksa Gula Darah Rutin', desc: 'HbA1c setiap 3–6 bulan bagi berisiko tinggi. Deteksi diabetes lebih awal mencegah kerusakan pankreas ireversibel.', color: '#4f7fff' }
+    ],
+    risiko: [
+      { level: 'high', title: 'Alkohol & Batu Empedu', desc: 'Keduanya adalah penyebab >80% kasus pankreatitis akut — peradangan mendadak yang bisa mengancam jiwa.' },
+      { level: 'high', title: 'Diabetes Tipe 2', desc: 'Resistensi insulin dan pola makan buruk menyebabkan kelelahan sel beta pankreas secara progresif.' },
+      { level: 'high', title: 'Kanker Pankreas', desc: 'Salah satu kanker dengan prognosis terburuk (survival 5 tahun <10%) karena sering terdeteksi terlambat.' },
+      { level: 'medium', title: 'Merokok', desc: 'Meningkatkan risiko kanker pankreas 2x lipat dan memperburuk kontrol gula darah.' },
+      { level: 'low', title: 'Genetik (BRCA, PRSS1)', desc: 'Mutasi gen tertentu meningkatkan risiko pankreatitis herediter dan kanker pankreas familial.' }
+    ],
+    gejala: [
+      { text: 'Nyeri hebat di perut atas menjalar ke punggung', type: 'red' },
+      { text: 'Mual dan muntah yang tidak kunjung reda', type: 'amber' },
+      { text: 'Penurunan berat badan drastis', type: 'red' },
+      { text: 'Tinja berminyak dan berbau menyengat (steatorrhea)', type: 'amber' },
+      { text: 'Gula darah sangat tidak stabil', type: 'amber' },
+      { text: 'Kulit dan mata menguning', type: 'red' },
+      { text: 'Kehilangan nafsu makan total', type: 'blue' }
+    ],
+    fakta: [
+      { label: 'FUNGSI VITAL', text: 'Pankreas menghasilkan enzim pencernaan yang bila aktif di luar usus — seperti saat pankreatitis — secara harfiah mulai "mencerna" pankreas itu sendiri.' },
+      { label: 'INSULIN', text: 'Frederick Banting menemukan insulin pada 1921. Sebelumnya, diagnosis diabetes tipe 1 berarti kematian dalam 1–2 tahun. Insulin adalah salah satu penemuan medis terpenting sepanjang sejarah.' }
+    ],
+    meters: [
+      { label: 'Dampak alkohol terhadap pankreas', value: 90, type: 'red' },
+      { label: 'Risiko diabetes tanpa kontrol diet', value: 80, type: 'amber' },
+      { label: 'Manfaat jaga berat badan ideal', value: 85, type: 'green' }
+    ]
+  },
+  {
+    id: 'limpa', name: 'Limpa', icon: '🫀', color: '#7b5ea7',
+    glow: 'rgba(123,94,167,0.08)', borderColor: 'rgba(123,94,167,0.4)',
+    status: 'support', statusText: 'Organ Pendukung',
+    desc: 'Organ limfoid terbesar yang menyaring darah, mendaur ulang sel darah merah tua, dan merupakan pusat pertahanan imun adaptif.',
+    fungsi: [
+      'Menyaring darah dari sel darah merah rusak, bakteri, dan patogen',
+      'Penyimpan hingga 25% trombosit dan cadangan darah darurat',
+      'Produksi limfosit (sel imun) dan aktivasi respons imun adaptif',
+      'Mendaur ulang zat besi dari hemoglobin sel darah merah tua',
+      'Cadangan sel darah merah yang dilepas saat perdarahan masif'
+    ],
+    perawatan: [
+      { freq: 'Lindungi', title: 'Hindari Olahraga Kontak Saat Mononukleosis', desc: 'Infeksi EBV menyebabkan limpa membesar (splenomegali). Benturan keras bisa menyebabkan ruptur limpa yang darurat.', color: '#7b5ea7' },
+      { freq: 'Vaksin', title: 'Vaksinasi Pasca Splenektomi Krusial', desc: 'Tanpa limpa, kamu rentan infeksi bakteri berkapsul (pneumococcus, meningococcus, H. influenzae). Vaksin wajib.', color: '#4f7fff' },
+      { freq: 'Imun', title: 'Jaga Kesehatan Imun Secara Umum', desc: 'Vitamin C, zinc, tidur cukup, dan olahraga menjaga fungsi limpa sebagai pusat kekebalan adaptif.', color: '#3dd68c' },
+      { freq: 'Medis', title: 'Monitor Tekanan Portal', desc: 'Sirosis hati menyebabkan hipertensi portal yang memperbesar limpa (splenomegali kongestif).', color: '#f5a623' }
+    ],
+    risiko: [
+      { level: 'high', title: 'Trauma Tumpul Perut', desc: 'Limpa adalah organ intraabdominal paling sering cedera akibat kecelakaan, menyebabkan perdarahan internal masif.' },
+      { level: 'high', title: 'Penyakit Darah (Leukemia, Limfoma)', desc: 'Infiltrasi sel ganas memperbesar limpa secara masif dan mengganggu fungsi penyaringan.' },
+      { level: 'medium', title: 'Sirosis & Hipertensi Portal', desc: 'Tekanan tinggi di vena portal akibat sirosis menyebabkan pembesaran limpa dan penurunan trombosit.' },
+      { level: 'medium', title: 'Malaria & Infeksi Tropik', desc: 'Malaria berulang menyebabkan "tropical splenomegaly syndrome" dengan limpa raksasa.' },
+      { level: 'low', title: 'Penyakit Autoimun', desc: 'Lupus dan artritis reumatoid dapat menyebabkan splenomegali akibat hiperplasia limfoid.' }
+    ],
+    gejala: [
+      { text: 'Nyeri atau rasa penuh di kiri atas perut', type: 'amber' },
+      { text: 'Cepat kenyang meski makan sedikit', type: 'blue' },
+      { text: 'Memar mudah dan perdarahan lama berhenti', type: 'amber' },
+      { text: 'Infeksi berulang dan berat', type: 'red' },
+      { text: 'Kelelahan dan anemia', type: 'blue' },
+      { text: 'Nyeri menjalar ke bahu kiri (ruptur)', type: 'red' }
+    ],
+    fakta: [
+      { label: 'TANPA LIMPA', text: 'Manusia bisa hidup tanpa limpa, tetapi rentan terhadap infeksi seumur hidup. Seseorang pasca-splenektomi harus mengonsumsi antibiotik profilaksis dan rutin divaksinasi.' }
+    ],
+    meters: [
+      { label: 'Risiko cedera dari trauma perut', value: 70, type: 'red' },
+      { label: 'Peran dalam imunitas tubuh', value: 75, type: 'blue' }
+    ]
+  },
+  {
+    id: 'tiroid', name: 'Tiroid', icon: '🦋', color: '#2dd4bf',
+    glow: 'rgba(45,212,191,0.08)', borderColor: 'rgba(45,212,191,0.4)',
+    status: 'support', statusText: 'Organ Pendukung',
+    desc: 'Kelenjar berbentuk kupu-kupu di leher yang mengontrol metabolisme seluruh tubuh melalui hormon T3 dan T4 yang diatur oleh hormon TSH.',
+    fungsi: [
+      'Produksi T4 (tiroksin) dan T3 (triiodotironin) untuk mengatur metabolisme basal',
+      'Kontrol suhu tubuh, denyut jantung, dan produksi energi',
+      'Perkembangan otak dan tulang pada janin dan bayi',
+      'Regulasi siklus menstruasi dan kesuburan',
+      'Produksi kalsitonin untuk regulasi kalsium dan kesehatan tulang'
+    ],
+    perawatan: [
+      { freq: 'Gizi', title: 'Asupan Yodium Cukup', desc: 'Yodium adalah bahan baku hormon tiroid. Gunakan garam beryodium, konsumsi seafood, dan produk susu secara teratur.', color: '#2dd4bf' },
+      { freq: 'Hindari', title: 'Batasi Goitrogen Berlebih', desc: 'Kubis, brokoli, kacang kedelai dalam jumlah sangat besar mentah bisa mengganggu fungsi tiroid pada yang sudah berisiko.', color: '#f5a623' },
+      { freq: 'Skrining', title: 'Periksa TSH Secara Berkala', desc: 'Terutama wanita usia reproduktif dan >50 tahun. Hipotiroid subklinis sering tidak bergejala tapi berdampak besar.', color: '#4f7fff' },
+      { freq: 'Stres', title: 'Kelola Stres dan Tidur Cukup', desc: 'Kortisol tinggi mengganggu konversi T4 ke T3 aktif, menyebabkan gejala hipotiroid meski kadar T4 normal.', color: '#7b5ea7' }
+    ],
+    risiko: [
+      { level: 'high', title: 'Penyakit Hashimoto (Autoimun)', desc: 'Penyakit tiroid paling umum — sistem imun menyerang kelenjar tiroid sendiri, menyebabkan hipotiroid progresif.' },
+      { level: 'high', title: 'Kekurangan Yodium', desc: 'Menyebabkan gondok (pembesaran tiroid) dan kretinisme pada janin — masalah kesehatan publik di daerah pegunungan.' },
+      { level: 'medium', title: 'Penyakit Graves', desc: 'Autoimun yang menyebabkan hipertiroid — tiroid terlalu aktif, menyebabkan jantung berdebar, tremor, dan exophthalmos.' },
+      { level: 'medium', title: 'Radiasi Kepala-Leher', desc: 'Radioterapi atau paparan radiasi nuklir meningkatkan risiko kanker tiroid secara signifikan.' },
+      { level: 'low', title: 'Kehamilan', desc: 'Tiroid bekerja lebih keras saat hamil. Gangguan tiroid tidak terdeteksi bisa memengaruhi perkembangan otak janin.' }
+    ],
+    gejala: [
+      { text: 'Kelelahan ekstrem dan berat badan naik (hipotiroid)', type: 'amber' },
+      { text: 'Jantung berdebar dan berat badan turun (hipertiroid)', type: 'amber' },
+      { text: 'Benjolan di leher (gondok atau nodul)', type: 'red' },
+      { text: 'Rambut rontok berlebihan', type: 'blue' },
+      { text: 'Intoleransi panas atau dingin', type: 'blue' },
+      { text: 'Siklus menstruasi tidak teratur', type: 'amber' },
+      { text: 'Suara serak tanpa sebab', type: 'amber' },
+      { text: 'Sembelit kronis atau diare', type: 'blue' }
+    ],
+    fakta: [
+      { label: 'KONTROL METABOLISME', text: 'Hormon tiroid memengaruhi hampir setiap sel dalam tubuh — dari kecepatan jantung berdetak hingga seberapa cepat kamu membakar kalori saat istirahat.' }
+    ],
+    meters: [
+      { label: 'Prevalensi gangguan tiroid pada wanita', value: 72, type: 'amber' },
+      { label: 'Peran yodium dalam kesehatan tiroid', value: 88, type: 'green' }
+    ]
+  },
+  {
+    id: 'tulang', name: 'Tulang & Sendi', icon: '🦴', color: '#a78bfa',
+    glow: 'rgba(167,139,250,0.08)', borderColor: 'rgba(167,139,250,0.4)',
+    status: 'support', statusText: 'Organ Pendukung',
+    desc: 'Sistem rangka 206 tulang yang tidak hanya memberi struktur, tetapi juga memproduksi sel darah, menyimpan mineral, dan mengeluarkan hormon.',
+    fungsi: [
+      'Struktur dan perlindungan organ vital (kranium, tulang rusuk, vertebra)',
+      'Sumsum tulang: produksi 200 miliar sel darah baru setiap hari',
+      'Penyimpanan kalsium, fosfor, dan mineral esensial lainnya',
+      'Produksi hormon osteocalcin yang mengatur metabolisme gula',
+      'Sendi memungkinkan gerakan, dilapisi kartilago dan cairan sinovial'
+    ],
+    perawatan: [
+      { freq: 'Nutrisi', title: 'Kalsium 1000–1200mg & Vitamin D 2000IU', desc: 'Susu, yogurt, tahu, brokoli, dan ikan teri untuk kalsium. Sinar matahari pagi 15 menit + suplemen untuk vitamin D.', color: '#a78bfa' },
+      { freq: 'Latihan', title: 'Olahraga Beban (Weight-Bearing)', desc: 'Lari, lompat, angkat beban merangsang osteoblas membangun tulang. Renang bagus untuk sendi tapi tidak untuk kepadatan tulang.', color: '#4f7fff' },
+      { freq: 'Lindungi', title: 'Postur & Ergonomi yang Benar', desc: 'Duduk tegak, layar sejajar mata, kasur yang mendukung punggung. Postur buruk menyebabkan skoliosis dan herniasi diskus.', color: '#3dd68c' },
+      { freq: 'Hindari', title: 'Kurangi Kafein & Sodium Berlebih', desc: 'Kafein dan garam meningkatkan ekskresi kalsium lewat urine, mempercepat kehilangan massa tulang.', color: '#f5a623' },
+      { freq: 'Sendi', title: 'Jaga Berat Badan Ideal', desc: 'Setiap kg kelebihan berat badan = 4 kg beban ekstra pada lutut. Obesitas mempercepat kerusakan kartilago.', color: '#ff4f6a' }
+    ],
+    risiko: [
+      { level: 'high', title: 'Osteoporosis', desc: 'Kepadatan tulang rendah — tulang rapuh dan mudah patah. Wanita pasca-menopause kehilangan 2-5% massa tulang per tahun.' },
+      { level: 'high', title: 'Osteoartritis', desc: 'Degenerasi kartilago sendi — penyebab disabilitas kronis terbanyak di lansia. Tidak ada obat yang membalikkan kerusakan.' },
+      { level: 'medium', title: 'Artritis Reumatoid', desc: 'Penyakit autoimun yang menyerang lapisan sinovial sendi, menyebabkan kerusakan progresif dan deformitas.' },
+      { level: 'medium', title: 'Defisiensi Vitamin D & Kalsium', desc: 'Rakitis pada anak, osteomalacia pada dewasa, dan percepatan osteoporosis pada lansia.' },
+      { level: 'low', title: 'Gaya Hidup Sedentari', desc: 'Tanpa tekanan mekanik, tulang tidak mendapat sinyal untuk membangun massa baru — mempercepat osteopenia.' }
+    ],
+    gejala: [
+      { text: 'Nyeri sendi yang memburuk saat aktivitas', type: 'amber' },
+      { text: 'Kaku sendi di pagi hari >30 menit', type: 'amber' },
+      { text: 'Fraktur akibat trauma ringan (osteoporosis)', type: 'red' },
+      { text: 'Tulang belakang bungkuk (kifosis)', type: 'amber' },
+      { text: 'Pembengkakan dan kemerahan di sendi', type: 'amber' },
+      { text: 'Penurunan tinggi badan >3cm dalam setahun', type: 'red' },
+      { text: 'Bunyi "krek" saat gerak sendi', type: 'blue' }
+    ],
+    fakta: [
+      { label: 'ORGAN HIDUP', text: 'Tulang bukan organ mati — mereka terus-menerus direnovasi. Setiap 10 tahun, seluruh kerangka dewasa diganti melalui proses remodeling oleh osteoklas dan osteoblas.' }
+    ],
+    meters: [
+      { label: 'Pentingnya vitamin D dan kalsium', value: 90, type: 'green' },
+      { label: 'Risiko osteoporosis pada wanita >50', value: 75, type: 'amber' },
+      { label: 'Dampak olahraga beban', value: 88, type: 'green' }
+    ]
+  },
+  {
+    id: 'kulit', name: 'Kulit', icon: '🫶', color: '#f5a623',
+    glow: 'rgba(245,166,35,0.08)', borderColor: 'rgba(245,166,35,0.4)',
+    status: 'support', statusText: 'Organ Pendukung',
+    desc: 'Organ terbesar tubuh (2m², 3.5kg) yang berfungsi sebagai perisai pertama dari patogen, regulasi suhu, dan jendela kondisi kesehatan internal.',
+    fungsi: [
+      'Barrier fisik terhadap patogen, sinar UV, bahan kimia, dan trauma',
+      'Regulasi suhu melalui keringat dan vasodilasi/vasokonstriksi',
+      'Sintesis vitamin D3 dari sinar UVB matahari',
+      'Reseptor sensorik: sentuhan, tekanan, nyeri, suhu, dan getaran',
+      'Ekskresi toksin melalui keringat; indikator kesehatan sistemik'
+    ],
+    perawatan: [
+      { freq: 'Harian', title: 'Sunscreen SPF 30+ Setiap Hari', desc: 'UV adalah penyebab utama penuaan dini, kerusakan DNA kulit, dan kanker kulit. Pakai bahkan di hari mendung.', color: '#f5a623' },
+      { freq: 'Hidrasi', title: 'Minum Cukup & Pelembab Rutin', desc: 'Kulit yang terhidrasi memiliki barrier fungsi lebih baik. Gunakan pelembab dengan ceramide atau hyaluronic acid.', color: '#4f7fff' },
+      { freq: 'Nutrisi', title: 'Antioksidan dari Buah Berwarna', desc: 'Vitamin C untuk kolagen, vitamin E untuk perlindungan membran sel, beta-karoten sebagai fotoproteksi alami.', color: '#3dd68c' },
+      { freq: 'Hindari', title: 'Tidak Merokok & Kurangi Gula', desc: 'Rokok menghancurkan kolagen dan elastin. Glikasi akibat gula berlebih membuat kulit kaku dan kusam.', color: '#ff4f6a' },
+      { freq: 'Periodik', title: 'Periksa Tahi Lalat Secara Rutin (ABCDE)', desc: 'Asymmetry, Border tidak rata, Color tidak merata, Diameter >6mm, Evolving (berubah) = segera ke dermatologis.', color: '#7b5ea7' }
+    ],
+    risiko: [
+      { level: 'high', title: 'Paparan UV Berlebih', desc: 'Penyebab utama melanoma dan karsinoma sel basal/skuamosa. Risiko meningkat dengan riwayat sunburn berulang.' },
+      { level: 'high', title: 'Merokok', desc: 'Mengurangi aliran darah kulit, menghancurkan kolagen, dan membuat kulit tampak tua 10–20 tahun lebih awal.' },
+      { level: 'medium', title: 'Kondisi Autoimun (Psoriasis, Lupus)', desc: 'Psoriasis memengaruhi 3% populasi global — peradangan kronis menyebabkan plak tebal dan risiko artritis.' },
+      { level: 'medium', title: 'Usia & Hormonal', desc: 'Produksi kolagen turun 1%/tahun setelah usia 25. Menopause mempercepat kehilangan ketebalan kulit 30% dalam 5 tahun.' },
+      { level: 'low', title: 'Stres Oksidatif & Polusi', desc: 'Radikal bebas dari polusi mengoksidasi lipid membran sel kulit, mempercepat penuaan dan pigmentasi.' }
+    ],
+    gejala: [
+      { text: 'Tahi lalat berubah bentuk/warna/ukuran', type: 'red' },
+      { text: 'Luka yang tidak kunjung sembuh', type: 'red' },
+      { text: 'Ruam muncul tiba-tiba di seluruh tubuh', type: 'amber' },
+      { text: 'Gatal kronis tanpa penyebab jelas', type: 'blue' },
+      { text: 'Kulit menguning (tanda masalah hati)', type: 'red' },
+      { text: 'Kulit sangat kering dan bersisik', type: 'blue' },
+      { text: 'Perubahan pigmentasi tiba-tiba', type: 'amber' }
+    ],
+    fakta: [
+      { label: 'REGENERASI KULIT', text: 'Lapisan terluar kulit (epidermis) benar-benar diganti sepenuhnya setiap 28–40 hari. Kamu secara harfiah memiliki "kulit baru" setiap bulan.' },
+      { label: 'LUASNYA KULIT', text: 'Jika direntangkan rata, kulit orang dewasa rata-rata seluas 2 meter persegi — kira-kira setara dengan pintu kamar yang terbuka penuh.' }
+    ],
+    meters: [
+      { label: 'Dampak UV terhadap penuaan kulit', value: 85, type: 'red' },
+      { label: 'Perlindungan sunscreen harian', value: 90, type: 'green' },
+      { label: 'Dampak merokok pada kulit', value: 80, type: 'amber' }
+    ]
+  }
+];
+
+function getStatusBadge(status, text) {
+  const cls = status === 'vital' ? 'status-vital' : status === 'key' ? 'status-key' : 'status-support';
+  return `<span class="organ-status ${cls}">${text}</span>`;
+}
+
+function renderOrganGrid() {
+  const grid = document.getElementById('organGrid');
+  grid.innerHTML = organs.map(o => `
+    <div class="organ-card" id="card-${o.id}" 
+         style="--card-glow: ${o.glow}; --card-border: ${o.borderColor};"
+         onclick="showDetail('${o.id}')">
+      <span class="organ-icon">${o.icon}</span>
+      <div class="organ-name">${o.name}</div>
+      ${getStatusBadge(o.status, o.statusText)}
+    </div>
+  `).join('');
+}
+
+function showDetail(id) {
+  const o = organs.find(x => x.id === id);
+  if (!o) return;
+
+  document.querySelectorAll('.organ-card').forEach(c => c.classList.remove('active'));
+  document.getElementById('card-' + id).classList.add('active');
+
+  const panel = document.getElementById('detailPanel');
+  panel.classList.remove('visible');
+
+  panel.innerHTML = `
+    <div class="detail-header">
+      <div class="detail-icon-wrap" style="background: ${o.glow}; border-color: ${o.borderColor};">
+        ${o.icon}
+      </div>
+      <div class="detail-header-text">
+        <h2>${o.name}</h2>
+        <p>${o.desc}</p>
+        <div class="health-meter" style="margin-top:0.75rem;">
+          ${o.meters.map(m => `
+            <div style="margin-bottom:0.5rem;">
+              <div class="meter-label"><span>${m.label}</span><span>${m.value}%</span></div>
+              <div class="meter-bar"><div class="meter-fill fill-${m.type}" style="width:${m.value}%"></div></div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    </div>
+    <div class="detail-tabs">
+      <button class="tab-btn active" onclick="switchTab(event,'tab-fungsi')">Fungsi & Cara Kerja</button>
+      <button class="tab-btn" onclick="switchTab(event,'tab-perawatan')">Cara Merawat</button>
+      <button class="tab-btn" onclick="switchTab(event,'tab-risiko')">Penyebab Kerusakan</button>
+      <button class="tab-btn" onclick="switchTab(event,'tab-gejala')">Gejala & Waspada</button>
+      <button class="tab-btn" onclick="switchTab(event,'tab-fakta')">Fakta Menarik</button>
+    </div>
+    <div class="tab-content active" id="tab-fungsi">
+      <div class="info-grid">
+        <div class="info-card">
+          <div class="info-card-header">
+            <div class="info-card-icon" style="background: rgba(79,127,255,0.12); color:#7aaeff;">⚙️</div>
+            <div class="info-card-title">Fungsi Utama ${o.name}</div>
+          </div>
+          <ul class="info-list">
+            ${o.fungsi.map(f => `<li>${f}</li>`).join('')}
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="tab-content" id="tab-perawatan">
+      <div class="care-timeline">
+        ${o.perawatan.map(p => `
+          <div class="timeline-item">
+            <div class="timeline-dot" style="background: ${p.color}; border-color: var(--bg2);"></div>
+            <div class="timeline-freq">${p.freq}</div>
+            <div class="timeline-title">${p.title}</div>
+            <div class="timeline-desc">${p.desc}</div>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+    <div class="tab-content" id="tab-risiko">
+      <div class="risk-grid">
+        ${o.risiko.map(r => `
+          <div class="risk-card ${r.level}">
+            <div class="risk-level">${r.level === 'high' ? '🔴 RISIKO TINGGI' : r.level === 'medium' ? '🟡 RISIKO SEDANG' : '🟢 RISIKO RENDAH'}</div>
+            <div class="risk-title">${r.title}</div>
+            <div class="risk-desc">${r.desc}</div>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+    <div class="tab-content" id="tab-gejala">
+      <p style="font-size:0.85rem; color:var(--muted); margin-bottom:1.25rem; line-height:1.6;">
+        🔴 <strong>Merah</strong> = segera ke dokter/IGD &nbsp;|&nbsp; 
+        🟡 <strong>Kuning</strong> = konsultasikan dengan dokter &nbsp;|&nbsp; 
+        🔵 <strong>Biru</strong> = pantau dan perhatikan perkembangannya
+      </p>
+      <div class="symptoms-grid">
+        ${o.gejala.map(g => `
+          <div class="symptom-tag">
+            <span class="symptom-dot dot-${g.type}"></span>
+            ${g.text}
+          </div>
+        `).join('')}
+      </div>
+    </div>
+    <div class="tab-content" id="tab-fakta">
+      ${o.fakta.map(f => `
+        <div class="fact-box">
+          <div class="fact-label">${f.label}</div>
+          <p>${f.text}</p>
+        </div>
+      `).join('')}
+      <div class="info-card" style="margin-top:1rem;">
+        <div class="info-card-header">
+          <div class="info-card-icon" style="background: rgba(61,214,140,0.12); color:var(--green);">✅</div>
+          <div class="info-card-title">Ringkasan Tips Terbaik</div>
+        </div>
+        <ul class="info-list">
+          ${o.perawatan.slice(0,3).map(p => `<li><strong>${p.title}:</strong> ${p.desc.split('.')[0]}.`).join('')}
+        </ul>
+      </div>
+    </div>
+  `;
+
+  setTimeout(() => {
+    panel.classList.add('visible');
+    panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 50);
+}
+
+function switchTab(e, targetId) {
+  const panel = document.getElementById('detailPanel');
+  panel.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  panel.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+  e.target.classList.add('active');
+  document.getElementById(targetId).classList.add('active');
+}
+
+renderOrganGrid();
+</script>
+</body>
+</html>
